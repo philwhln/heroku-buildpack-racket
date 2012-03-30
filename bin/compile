@@ -1,16 +1,51 @@
-#!/bin/sh
+#! /bin/sh
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+RACKET_REPO=https://github.com/plt/racket.git
+RACKET_DIR=
+
+make_tempdir()
+{
+  dir=$(mktemp -t -u node-$1-XXXXXXX)
+  rm -rf $dir
+  mkdir -p $dir
+  echo $dir
+}
+
+get_racket() {
+  dir=$1
+  cd $dir
+  git clone $RACKET_REPO 1>&2
+  cd racket
+  echo `pwd`
+}
+
+build_racket() {
+  dir=$1
+  cd $dir/src
+  rm -rf build
+  mkdir build
+  cd build
+  ../configure --prefix=$BUILD_DIR 1>&2
+  make 1>&2 && make install 1>&2 && echo $BUILD_DIR
+}
 
 indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Found a hello.txt"
+echo "-----> Building Racket Runtime Environment"
 
-# if hello.txt is empty, abort the build
-if [ ! -s $1/hello.txt ]; then
-  echo "hello.txt was empty" | indent
+RACKET_DIR=$(build_racket $(get_racket $(make_tempdir racket)))
+
+if [ ! -d $RACKET_DIR ] then
+  echo "Fail" | indent
   exit 1
 fi
 
-# replace hello with goodbye in a new file
-cat $1/hello.txt | sed -e "s/[Hh]ello/Goodbye/g" > $1/goodbye.txt
+echo "-----> Creating racketapp From heroku-setup.mkz"
+cd $RACKET_DIR
+cd bin
+raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/heroku-setup.mkz

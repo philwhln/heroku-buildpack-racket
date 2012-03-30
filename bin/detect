@@ -1,9 +1,13 @@
-#!/bin/sh
+#! /bin/sh
 
-# this pack is valid for apps with a hello.txt in the root
-if [ -f $1/hello.txt ]; then
-  echo "HelloFramework"
-  exit 0
+BUILD_DIR=$1
+OK=0
+FAIL=1
+
+# this pack is valid for apps with a heroku-setup.mkz in the root
+if [ -f $BUILD_DIR/heroku-setup.mkz ]; then
+  echo "Racket Framework"
+  exit $OK
 else
-  exit 1
+  exit $FAIL
 fi
