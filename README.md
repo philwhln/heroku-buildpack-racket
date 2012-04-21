@@ -10,7 +10,7 @@ Usage
 Example usage:
 
     $ ls
-    Procfile web.mkz heroku-setup.mkz
+    Procfile web.mkt heroku-setup.mkt
 
     $ heroku create --stack cedar --buildpack http://github.com/onixie/heroku-buildpack-racket.git
 
