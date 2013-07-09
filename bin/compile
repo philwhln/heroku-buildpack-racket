@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -19,14 +19,14 @@ make_tempdir()
 get_racket() {
   dir=$1
   cd $dir
-  git clone $RACKET_REPO 1>&2
+  git clone $RACKET_REPO racket 1>&2
   cd racket
   echo `pwd`
 }
 
 build_racket() {
   dir=$1
-  cd $dir/src
+  cd $dir/racket/src
   rm -rf build
   mkdir build
   cd build
