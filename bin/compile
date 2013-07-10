@@ -41,15 +41,15 @@ indent() {
 
 echo "-----> Building Racket Runtime Environment"
 
-echo "-----> RACKET_DIR=$RACKET_DIR"
 RACKET_DIR=$(build_racket $(get_racket $(make_tempdir racket)))
+echo "-----> RACKET_DIR=$RACKET_DIR"
 
 if [ ! -d $RACKET_DIR ]; then
   echo "Fail" | indent
   exit 1
 fi
 
-echo "-----> Creating racketapp From heroku-setup.mkt"
+echo "-----> Creating racketapp From racketapp.mkt"
 cd $RACKET_DIR
 cd bin
 raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/racketapp.mkt
