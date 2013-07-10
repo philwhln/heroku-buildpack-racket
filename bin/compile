@@ -41,6 +41,7 @@ indent() {
 
 echo "-----> Building Racket Runtime Environment"
 
+echo "-----> RACKET_DIR=$RACKET_DIR"
 RACKET_DIR=$(build_racket $(get_racket $(make_tempdir racket)))
 
 if [ ! -d $RACKET_DIR ]; then
