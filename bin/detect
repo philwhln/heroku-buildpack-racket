@@ -5,7 +5,7 @@ OK=0
 FAIL=1
 
 # Only supports Ubuntu Precise
-if [ "`lsb_release -r 2>/dev/null | grep 12.04`" != "" ]; then
+if [ "`lsb_release -r 2>/dev/null | grep 12.04`" == "" ]; then
   exit $FAIL
 fi
 # this pack is valid for apps with a racketapp.mkt in the root
