@@ -19,7 +19,7 @@ make_tempdir()
 get_racket() {
   dir=$1
   cd $dir
-  curl $RACKET_URL -o racket-install.sh
+  curl $RACKET_URL -o racket-install.sh || echo "Failed to retrieve $RACKET_URL"
   chmod u+rx racket-install.sh
   echo `pwd`
 }
