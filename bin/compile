@@ -6,8 +6,7 @@ CACHE_DIR=$2
 RACKET_VERSION=5.3.5
 RACKET_ARCH="x86_64-linux-ubuntu-precise"
 RACKET_URL="http://download.racket-lang.org/installers/$RACKET_VERSION/racket/racket-$RACKET_VERSION-bin-$RACKET_ARCH.sh"
-INSTALL_DIR=$BUILD_DIR
-RACKET_DIR=$INSTALL_DIR/racket
+RACKET_DIR=$BUILD_DIR/racket
 
 echo "-----> Building Racket Runtime Environment"
 
@@ -20,10 +19,10 @@ echo "-----> Downloading Racket installer from $RACKET_URL"
 curl $RACKET_URL -o racket-install.sh || echo "Failed to retrieve $RACKET_URL"
 chmod u+rx racket-install.sh
 
-echo "-----> Running Racket installation into $INSTALL_DIR"
+echo "-----> Running Racket installation into $RACKET_DIR"
 ./racket-install.sh <<EOF
 no
-$INSTALL_DIR
+$RACKET_DIR
 
 EOF
 
