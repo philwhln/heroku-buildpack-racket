@@ -1,7 +1,7 @@
-Heroku buildpack: Racket
-========================
+Stackato buildpack: Racket
+==========================
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for Racket apps.
+This is a [Heroku-style buildpack](http://devcenter.heroku.com/articles/buildpacks) for Racket apps running on Stackato.
 It uses [Racket](http://racket-lang.org).
 
 Usage
@@ -10,21 +10,19 @@ Usage
 Example usage:
 
     $ ls
-    Procfile web.mkt heroku-setup.mkt
+    stackato.yml web.mkt racketapp.mkt
 
-    $ heroku create --stack cedar --buildpack http://github.com/onixie/heroku-buildpack-racket.git
+    $ cat stackato.yml 
+    ---
+    name: racket
+    framework:
+      type: buildpack
+    env:
+      BUILDPACK_URL: git://github.com/philwhln/stackato-buildpack-racket.git
+    processes:
+      web: ./racketapp
 
-    $ git push heroku master
-    ...
-    -----> Heroku receiving push
-    -----> Fetching custom buildpack
-    -----> Racket Framework app detected
-    -----> Building Racket Runtime Environment
-    ...
+    $ stackato push --no-prompt
 
-The buildpack will detect that your app has a `heroku-setup.mkz` in the root.
+The buildpack will detect that your app has a `racketapp.mkt` in the root.
 
-Hacking
--------
-
-To use this buildpack, fork it on Github.  Push up changes to your fork, then create a test app with `--buildpack <your-github-url>` and push to it.

@@ -4,10 +4,15 @@ BUILD_DIR=$1
 OK=0
 FAIL=1
 
-# this pack is valid for apps with a heroku-setup.mkt in the root
-if [ -f $BUILD_DIR/heroku-setup.mkt ]; then
-  echo "Racket Framework"
-  exit $OK
-else
+# Only supports Ubuntu Precise
+if [ "`lsb_release -r 2>/dev/null | grep 12.04`" != "" ]; then
   exit $FAIL
 fi
+# this pack is valid for apps with a racketapp.mkt in the root
+if [ ! -f $BUILD_DIR/racketapp.mkt ]; then
+  exit $FAIL
+fi
+
+echo "Racket Framework"
+exit $OK
+

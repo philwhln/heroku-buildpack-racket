@@ -3,10 +3,10 @@
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-RACKET_REPO=https://github.com/plt/racket.git
+RACKET_VERSION=5.3.5
+RACKET_ARCH="x86_64-linux-ubuntu-precise"
+RACKET_URL="http://download.racket-lang.org/installers/$RACKET_VERSION/racket/racket-$RACKET_VERSION-bin-$RACKET_ARCH.sh"
 RACKET_DIR=
-
-MAKEOPTS=-j3
 
 make_tempdir()
 {
@@ -19,19 +19,20 @@ make_tempdir()
 get_racket() {
   dir=$1
   cd $dir
-  git clone $RACKET_REPO racket 1>&2
-  cd racket
+  curl $RACKET_URL -o racket-install.sh
+  chmod u+rx racket-install.sh
   echo `pwd`
 }
 
 build_racket() {
   dir=$1
-  cd $dir/racket/src
-  rm -rf build
-  mkdir build
-  cd build
-  ../configure --prefix=$BUILD_DIR 1>&2
-  make $MAKEOPTS 1>&2 && make $MAKEOPTS install 1>&2 && echo $BUILD_DIR
+  cd $dir
+  ./racket-install.sh <<EOF
+no
+4
+
+EOF
+  echo $dir/racket
 }
 
 indent() {
@@ -50,4 +51,5 @@ fi
 echo "-----> Creating racketapp From heroku-setup.mkt"
 cd $RACKET_DIR
 cd bin
-raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/heroku-setup.mkt
+raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/racketapp.mkt
+
