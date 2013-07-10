@@ -6,48 +6,29 @@ CACHE_DIR=$2
 RACKET_VERSION=5.3.5
 RACKET_ARCH="x86_64-linux-ubuntu-precise"
 RACKET_URL="http://download.racket-lang.org/installers/$RACKET_VERSION/racket/racket-$RACKET_VERSION-bin-$RACKET_ARCH.sh"
-RACKET_DIR=/app/app/racket
-
-make_tempdir()
-{
-  dir=$(mktemp -t -u node-$1-XXXXXXX)
-  rm -rf $dir
-  mkdir -p $dir
-  echo $dir
-}
-
-get_racket() {
-  dir=$1
-  cd $dir
-  curl $RACKET_URL -o racket-install.sh || echo "Failed to retrieve $RACKET_URL" 1>2
-  chmod u+rx racket-install.sh
-}
-
-build_racket() {
-  dir=$1
-  cd $dir
-  ./racket-install.sh <<EOF
-no
-3
-
-EOF
-}
-
-indent() {
-  sed -u 's/^/       /'
-}
+INSTALL_DIR=$BUILD_DIR
+RACKET_DIR=$INSTALL_DIR/racket
 
 echo "-----> Building Racket Runtime Environment"
 
-INSTALL_DIR=$(make_tempdir racket)
-get_racket $INSTALL_DIR
-echo "-----> INSTALL_DIR=$INSTALL_DIR"
-build_racket $INSTALL_DIR
+tmp_dir=$(mktemp -t -u node-$1-XXXXXXX)
+rm -rf $tmp_dir
+mkdir -p $tmp_dir
+cd $tmp_dir
 
-echo "-----> RACKET_DIR=$RACKET_DIR"
+echo "-----> Downloading Racket installer from $RACKET_URL"
+curl $RACKET_URL -o racket-install.sh || echo "Failed to retrieve $RACKET_URL"
+chmod u+rx racket-install.sh
+
+echo "-----> Running Racket installation into $INSTALL_DIR"
+./racket-install.sh <<EOF
+no
+$INSTALL_DIR
+
+EOF
 
 if [ ! -d $RACKET_DIR ]; then
-  echo "Fail" | indent
+  echo "       Fail"
   exit 1
 fi
 
