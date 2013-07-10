@@ -52,7 +52,5 @@ if [ ! -d $RACKET_DIR ]; then
 fi
 
 echo "-----> Creating racketapp From racketapp.mkt"
-cd $RACKET_DIR
-cd bin
-raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/racketapp.mkt
+$RACKET_DIR/bin/raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/racketapp.mkt
 
