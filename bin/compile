@@ -6,7 +6,6 @@ CACHE_DIR=$2
 RACKET_VERSION=5.3.5
 RACKET_ARCH="x86_64-linux-ubuntu-precise"
 RACKET_URL="http://download.racket-lang.org/installers/$RACKET_VERSION/racket/racket-$RACKET_VERSION-bin-$RACKET_ARCH.sh"
-RACKET_DIR=
 
 make_tempdir()
 {
@@ -19,9 +18,8 @@ make_tempdir()
 get_racket() {
   dir=$1
   cd $dir
-  curl $RACKET_URL -o racket-install.sh || echo "Failed to retrieve $RACKET_URL"
+  curl $RACKET_URL -o racket-install.sh || echo "Failed to retrieve $RACKET_URL" 1>2
   chmod u+rx racket-install.sh
-  echo `pwd`
 }
 
 build_racket() {
@@ -32,7 +30,6 @@ no
 4
 
 EOF
-  echo $dir/racket
 }
 
 indent() {
@@ -42,8 +39,12 @@ indent() {
 echo "-----> Building Racket Runtime Environment"
 echo "-----> RACKET_URL=$RACKET_URL"
 
-RACKET_DIR=$(build_racket $(get_racket $(make_tempdir racket)))
+INSTALL_DIR=$(make_tempdir racket)
+get_racket $INSTALL_DIR
+echo "-----> INSTALL_DIR=$INSTALL_DIR"
+RACKET_DIR=$INSTALL_DIR/racket
 echo "-----> RACKET_DIR=$RACKET_DIR"
+build_racket $RACKET_DIR
 
 if [ ! -d $RACKET_DIR ]; then
   echo "Fail" | indent
