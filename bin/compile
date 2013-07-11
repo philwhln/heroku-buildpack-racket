@@ -6,7 +6,7 @@ CACHE_DIR=$2
 RACKET_VERSION=5.3.5
 RACKET_ARCH="x86_64-linux-ubuntu-precise"
 RACKET_URL="http://download.racket-lang.org/installers/$RACKET_VERSION/racket/racket-$RACKET_VERSION-bin-$RACKET_ARCH.sh"
-RACKET_DIR=$BUILD_DIR/racket
+RACKET_DIR=/app/app/racket
 
 echo "-----> Building Racket Runtime Environment"
 
