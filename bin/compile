@@ -10,7 +10,7 @@ RACKET_DIR=/app/app/racket
 
 echo "-----> Building Racket Runtime Environment"
 
-tmp_dir=$(mktemp -t -u node-$1-XXXXXXX)
+tmp_dir=$(mktemp -t -u stackato-buildpack-racket-XXXXXXX)
 rm -rf $tmp_dir
 mkdir -p $tmp_dir
 cd $tmp_dir
