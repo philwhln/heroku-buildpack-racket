@@ -10,7 +10,7 @@ Usage
 Example usage:
 
     $ ls
-    stackato.yml web.mkt racketapp.mkt
+    stackato.yml web.rkt racketapp.rkt
 
     $ cat stackato.yml 
     ---
@@ -24,5 +24,5 @@ Example usage:
 
     $ stackato push --no-prompt
 
-The buildpack will detect that your app has a `racketapp.mkt` in the root.
+The buildpack will detect that your app has a `racketapp.rkt` in the root.
 

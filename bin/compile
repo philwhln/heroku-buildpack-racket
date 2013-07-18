@@ -31,8 +31,8 @@ if [ ! -d $RACKET_DIR ]; then
   exit 1
 fi
 
-echo "-----> Creating racketapp From racketapp.mkt"
-$RACKET_DIR/bin/raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/racketapp.mkt
+echo "-----> Creating racketapp From racketapp.rkt"
+$RACKET_DIR/bin/raco exe -o $BUILD_DIR/racketapp $BUILD_DIR/racketapp.rkt
 
 # Make sure racket binary is available in the DEA container
 cp -r $RACKET_DIR $BUILD_DIR/
